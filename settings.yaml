@@ -1,0 +1,4 @@
+clock_type: 1 #1 - with seconds,0 - without seconds
+show_day_and_date: 3 #3 - show day and date 2 - show only day ,1 - show only date,0 - don't show
+font : 'straight' # font from "art" library
+language: 'Russian' # language
