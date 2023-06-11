@@ -1,4 +1,5 @@
-clock_type: 1 #1 - with seconds,0 - without seconds
+clock_type: 1  #1 - with seconds,0 - without seconds
 show_day_and_date: 3 #3 - show day and date 2 - show only day ,1 - show only date,0 - don't show
-font : 'straight' # font from "art" library
+font : 'straight' # font from "art" library //do not touch
 language: 'Russian' # language
+show_active_window: True #showing name of active window (True - show, False - don't show)

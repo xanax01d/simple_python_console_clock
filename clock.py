@@ -1,16 +1,12 @@
 from datetime import datetime
-import os
-from sys import platform,exit
+import sys as s
 from time import sleep
-from art import *
-import locale
-import yaml
+from art import * 
+from os import system
+from ctypes import windll
+import subprocess as sp
+import os,locale,yaml,pyowm,asyncio,psutil,win32gui,win32con
 
-with open("settings.yaml", "r") as f:
-    settings = yaml.load(f, Loader=yaml.FullLoader) # open config
-locale.setlocale(
-	category = locale.LC_ALL,
-	locale = settings['language']) #set language
 
 class info: pass #dynamic class
 def exitt():
@@ -18,17 +14,29 @@ def exitt():
 	print('Exit...')
 	exit()
 
+system("title " + 'Clocks')
+with open("settings.yaml", "r") as f:
+    settings = yaml.load(f, Loader=yaml.FullLoader) # open config
+
+locale.setlocale(
+	category = locale.LC_ALL,
+	locale = settings['language']) #set language
+
+
 def change_size(): 
 	if settings["clock_type"] == 1:
-		return(os.system('mode 38,7'))
+		return(os.system('mode 42,10'))
 	else:
-		return(os.system('mode 25,7'))
+		if settings["show_day_and_date"] == 3:
+			return(os.system('mode 42,8'))
+		else:
+			return(os.system('mode 32,8'))
 def clear_console(): #clear console\terminal
-	if platform == 'linux' or platform == 'linux2':
+	if s.platform == 'linux' or s.platform == 'linux2':
 		return(os.system('clear'))
-	elif platform == 'win32':
+	elif s.platform == 'win32':
 		return(os.system('cls'))
-	elif platform == 'darwin':
+	elif s.platform == 'darwin':
 		return(os.system('clear'))
 
 def get_time(info): #getting time,date,day
@@ -48,9 +56,10 @@ def printtime(info): #printing time,day and date
 		print(info.day)
 	elif settings["show_day_and_date"] == 1:
 		print(info.full_date)
+	if settings["show_active_window"] == 1:
+		print(win32gui.GetWindowText(win32gui.GetForegroundWindow()))
 	sleep(0.5)
 	clear_console()
-
 def main():
 	change_size()
 	while True:
@@ -60,4 +69,6 @@ def main():
 			exitt()
 
 if __name__ == '__main__':
+	# Qold_style = win32con.GetWindowStyle()
+	#$win32con.SetWindowStyle(old_style | wx.STAY_ON_TOP)
 	main()
